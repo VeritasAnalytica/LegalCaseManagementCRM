@@ -37,12 +37,13 @@ To get the CRM system running locally, follow these steps:
 4. **Create a virtual environment (if not already created)**:
    ```bash
    python3 -m venv venv
-  ```
-  After creation, activate the virtual environment:
+   ```
+After creation, activate the virtual environment:
+  
   - On Windows:
-  ```bash
-  venv\Scripts\activate
-  ```
+     ```bash
+     venv\Scripts\activate
+     ```
   - On macOS/Linux:
     ```bash
     source venv/bin/activate
@@ -66,7 +67,7 @@ python-dotenv==0.21.1
   python app.py
   ```
 8. **Configure Database**:
-  Make sure the SQLite database is set up properly.
+   Make sure the SQLite database is set up properly.
 
 ## Features and Benefits
 
