@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Tagify CSS -->
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet">
+
+<!-- Tagify JS -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.min.js"></script>
+
+    <meta charset="utf-8">
+    <title>Direct Counsel</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ url_for('static',filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}"rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+</head>
+
+<body>
+    
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DirectCounsel</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="{{ url_for('static',filename='img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Adam Dawson</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="http://127.0.0.1:5000/caseslist/{{table}}"class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Master List</a>
+                    
+                    <a href="{{ url_for('widget') }}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Sheets Upload</a>
+                    <a href="http://127.0.0.1:5000/caseslist_ATO/{{table}}"class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>ATO Defaults</a>
+                    <a href="http://127.0.0.1:5000/caseslist_Defaults/{{table}}"class="nav-item nav-link"><i class="fa fa-table me-2"></i>Court Actions</a>
+                   <a href="{{ url_for('chart') }}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Wind Ups</a>
+                    <a href="{{ url_for('chart') }}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i> Others</a>
+                    
+                    <div class="nav-item dropdown" id="nav_item_dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ url_for('signin') }}" class="dropdown-item">Sign In</a>
+                            <a href="{{ url_for('signup') }}" class="dropdown-item">Sign Up</a>
+                            <a href="{{ url_for('_404') }}" class="dropdown-item">404 Error</a>
+                            <a href="{{ url_for('blank') }}"class="dropdown-item">Blank Page</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="nav">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                       
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{ url_for('static',filename='img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{ url_for('static',filename='img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{ url_for('static',filename='img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                       
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown" id="drop_down">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="{{ url_for('static',filename='img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Adam Dawson</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ url_for('profile') }}" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="http://127.0.0.1:5000/logout" class="dropdown-item" value="logout">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Chart Start -->
+<div class="container mt-5">
+         <h1>Case Details</h1>
+    <div class="card">
+        <div class="card-header">
+            Detail Information for Case <span id="index">{{ row['index'] }}</span>
+        </div>
+        
+
+            <div class="card-body">
+            {% if row %}
+            <table class="table table-responsive">
+                <tbody>
+                <tr><th>Entity Name:</th><td>{{ row['Entity Name'] if row['Entity Name'] not in [None, ''] else '' }}</td></tr>
+                <tr><th>Single Trading Name:</th><td>{{ row['Single Trading Name'] if row['Single Trading Name'] not in [None, ''] else '' }}</td></tr>
+                <tr><th>State - PostCode:</th><td>{{ row['State'] }} - {{ row['Postcode'] if row['Postcode'] not in [None, ''] else '' }}</td></tr>
+                <tr><th>Court Action/Default Crediator:</th><td>{{ row['Court Action Description'] if row['Court Action Description'] not in [None, ''] else '' }} {{ row['DefaultCreditor'] if row['DefaultCreditor'] not in [None, ''] else '' }}</td></tr>
+                    <th>Date:</th>
+                    <td>{{ row['Action_date'] if row['Action_date'] else row['DefaultDate'] if row['DefaultDate'] else ' ' }}</td>
+                </tr>
+                <tr><th>Value:</th><td>{{ row['Value'] | currency }}</td></tr>
+                <tr><th>Plaintiff:</th><td>{{ row['Court Action Plaintiff_1'] if row['Court Action Plaintiff_1'] not in [None, ''] else '' }}</td></tr>
+
+                <tr>
+                    <th>Phone Number:</th>
+                    <td>
+                        <a href="tel:{{ formated_number|replace(' ', '') }}">
+                            {{ formated_number }}
+                        </a>
+                    </td>
+                </tr>
+                
+                <tr><th>Status:</th><td>{{ row['Status'] if row['Status'] else '' }}</td></tr>
+                <tr><th>Notes:</th><td>{{ row['Notes'] if row['Notes'] not in [None, ''] else '' }}</td></tr>
+                
+                                                        
+            </tbody>
+  
+                </table>
+
+                
+                        <form action="{{ url_for('update_data', id=row['index'], table=table) }}" method="post">
+                            <table class="table table-responsive">
+                             <!-- ... other rows ... -->
+                             <tr>
+                                <th>Key Decision Maker Full Name:</th>
+                                <td><input name="KeyDecisionMakerFullName" id="keyDecisionMakerInput" value="{{ row['Key Decision Maker Full Name'] }}"></td>
+                            </tr>
+                            <tr>
+                                <th>Key Decision Maker Position:</th>
+                                <td>
+                                    <input type="text" name="KeyDecisionMakerPosition" id="keyDecisionMakerPositionInput" value="{{ row['Key Decision Maker Position'] }}" size="70">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td>
+                                    <input type="text" name="EMAIL" id="EMAILInput" value="{{ row['EMAIL'] }}" size="70">
+                                </td>
+                                <tr>
+                                    <th>Additional Phone No:</th>
+                                    <td>
+                                        <a href="#" id="phoneLink">
+                                            <input type="text" name="additionalPhoneNo" id="additionalPhoneNoInput" value="{{ row['Additional Phone No'] }}" size="70">
+                                        </a>
+                                    </td>
+                                </tr>
+                        
+                            <!-- New Extra Info dropdown -->
+                        
+
+                        
+                        </table>
+                                <div class="mb-3" id="status_container">
+                                <label for="status" class="form-label" style="color: black;" ><b>Status</b></label>
+                                <div class="container">
+                                    <div class="row">
+                                      <div class="col"><select id="status" name="status" class="form-control" onchange="checkStatus()">
+                                        {% set current_status = row['Status'] %}
+                                        <option value="Not Started" {% if current_status == "Not Started" %}selected{% endif %}>Not Started</option>
+                                        <option value="Call Again - No VM, No Email" {% if current_status == "Call Again - No VM, No Email" %}selected{% endif %}>Call Again - No VM, No Email</option>
+                                        <option value="Call Again - No VM, Emailed DD/MM/YY" {% if current_status == "Call Again - No VM, Emailed DD/MM/YY" %}selected{% endif %}>Call Again - No VM, Emailed DD/MM/YY</option>
+                                        <option value="Call Again - VM DD/MM/YY, Emailed DD/MM/YY" {% if current_status == "Call Again - VM DD/MM/YY, Emailed DD/MM/YY" %}selected{% endif %}>Call Again - VM DD/MM/YY, Emailed DD/MM/YY</option>
+                                        <option value="Call Again - VM DD/MM/YY, No Email" {% if current_status == "Call Again - VM DD/MM/YY, No Email" %}selected{% endif %}>Call Again - VM DD/MM/YY, No Email</option>
+                                        <option value="Call Again - Spoke DD/MM/YY, Emailed DD/MM/YY" {% if current_status == "Call Again - Spoke DD/MM/YY, Emailed DD/MM/YY" %}selected{% endif %}>Call Again - Spoke DD/MM/YY, Emailed DD/MM/YY</option>
+                                        <option value="Call Again - Spoke DD/MM/YY, No Email" {% if current_status == "Call Again - Spoke DD/MM/YY, No Email" %}selected{% endif %}>Call Again - Spoke DD/MM/YY, No Email</option>
+                                        <option value="Transferred - Rebuild Now" {% if current_status == "Transferred - Rebuild Now" %}selected{% endif %}>Transferred - Rebuild Now</option>
+                                        <option value="Transferred - Chifley" {% if current_status == "Transferred - Chifley" %}selected{% endif %}>Transferred - Chifley</option>
+                                        <option value="Transferred - EGR" {% if current_status == "Transferred - EGR" %}selected{% endif %}>Transferred - EGR</option>
+                                        <option value="Transferred - DJR" {% if current_status == "Transferred - DJR" %}selected{% endif %}>Transferred - DJR</option>
+                                        <option value="Cold" {% if current_status == "Cold" %}selected{% endif %}>Cold</option>
+                                        <option value="Do Not Call" {% if current_status == "Do Not Call" %}selected{% endif %}>Do Not Call</option>
+                                    </select>
+                                    <br><input type="date" id="statusDate1" name="statusDate1" class="form-control mb-3" style="display: none;">
+                                    
+                                    <!-- Date Picker 2 (if needed) -->
+                                    <input type="date" id="statusDate2" name="statusDate2" class="form-control mb-3" style="display: none;">
+                                    </div>
+                                      <div class="col"></div>
+   
+   
+                                    </div>
+                                  </div>
+                                
+                                
+                                <br>
+                                <tr>
+                                <label for="Follow Up" class="form-label" style="color: black;" id="follow_Up"><b>Follow Up</b></label>
+                                    
+                                    <td>
+                                        <div class="container">
+                                            <div class="row">
+                                              <div class="col-sm">
+                                                <input type="date" id="followUpDate" class="form-control">
+                                              </div>
+                                              <div class="col-sm">
+                                                <input type="time" id="followUpStartTime" class="form-control" value="09:00">
+                                              </div>
+                                              <div class="col-sm">
+                                                <input type="time" id="followUpEndTime" class="form-control" value="10:00">
+                                              </div>
+                                              <div class="col-sm">
+                                                <select id="followUpType" class="form-control">
+                                                    <option value="Call">Call</option>
+                                                    <option value="VM">Voice Message</option>
+                                                    <option value="Email">Email</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                          </div>
+
+
+
+                                        
+                                        <br><a href="#" onclick="addToGoogleCalendar();" class="btn btn-info" style="padding-top: 10px;" id="add_to_calendar">
+                                            Add to Calendar
+                                        </a>
+                                    </td>
+                                </tr>
+        
+        
+                               <!-- Date Picker 1 -->
+                            </div>
+                            
+                            <div class="mb-3" id="notes_container">
+                                <label for="notes" class="form-label" style="color: black;" id="notes"><b>Notes</b></label>
+                                <textarea class="form-control" id="notes" name="notes" style="height: 120px;">{{ row['Notes'] }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="update">Update</button>
+                        </form>
+                      <br>  <tr>
+                            <td>
+                                <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#moreinformation" aria-expanded="false" aria-controls="moreinformation" id="more_information">
+                                    More Information
+                                </button>
+                                <div class="collapse" id="moreinformation">
+                                    <div class="card card-body">
+                                        <p>ABN: {{ row['ABN']|int if row['ABN'] else '' }}</p>
+                                        <p>ACN: {{ row['ACN']|int if row['ACN'] else '' }}</p>
+                                        <p>Line of Business: {{ row['LineOfBusiness'] }}</p>
+                                        <p>Number of Employees: {{ row['Number of Employees']|int if row['Number of Employees'] else '' }}</p>
+                                        <p>Revenue: {{ '$' + '{:,.0f}'.format(row['Revenue']) if row['Revenue'] else '' }}</p>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        
+                        
+                        
+                        
+         <script>
+
+function addToGoogleCalendar() {
+    var followUpDate = document.getElementById('followUpDate').value;
+    var followUpStartTime = document.getElementById('followUpStartTime').value;
+    var followUpEndTime = document.getElementById('followUpEndTime').value;
+    var followUpType = document.getElementById('followUpType').value;
+
+    var index = document.getElementById('index').innerText;
+    // New: Fetch additional details from the form
+    var keyDecisionMakerJSON = document.getElementById('keyDecisionMakerInput').value;
+    var keyDecisionMaker = '';
+
+    try {
+        // Parse the JSON and safely access the first item's value
+        var parsedData = JSON.parse(keyDecisionMakerJSON);
+        if (parsedData.length > 0) {
+            keyDecisionMaker = parsedData[0].value; // Assume the data is an array of objects and you want the 'value' of the first object
+        }
+    } catch (e) {
+        console.error('Error parsing JSON:', e);
+        alert('Failed to parse key decision maker details. Please check the input format.');
+        return;
+    }
+
+    var email = document.getElementById('EMAILInput').value;
+    var Phone = document.getElementById('phone').innerText;
+    
+
+    // Validate required fields
+    if (!followUpDate) {
+        alert('Please select a date.');
+        return;
+    }
+    if (!followUpStartTime || !followUpEndTime) {
+        alert('Please select both start and end times.');
+        return;
+    }
+
+    var startTime = new Date(followUpDate + "T" + followUpStartTime + ":00");
+    var endTime = new Date(followUpDate + "T" + followUpEndTime + ":00");
+
+    // Format description with additional details
+    var description = 'Scheduled ' + followUpType + ' follow up.\n\n' +
+                    'Case No: ' + index + '\n' +                  
+                     'Key Decision Maker: ' + keyDecisionMaker + '\n' +
+                      'Email: ' + email + '\n' +
+                      'Phone: ' + Phone;
+
+    var details = {
+        action: 'TEMPLATE',
+        text: followUpType + ' Follow Up',
+        details: description,  // Updated to use formatted description
+        dates: formatGoogleCalendarDate(startTime) + '/' + formatGoogleCalendarDate(endTime)
+    };
+
+    var baseURL = 'https://calendar.google.com/calendar/u/0/r/eventedit';
+    var queryString = Object.keys(details).map(function(key) {
+        return key + '=' + encodeURIComponent(details[key]);
+    }).join('&');
+
+    window.open(baseURL + '?' + queryString, '_blank');
+}
+
+function formatGoogleCalendarDate(date) {
+    return date.toISOString().replace(/-|:|\.\d\d\d/g, '');
+}
+function formatGoogleCalendarDate(date) {
+    return date.toISOString().replace(/-|:|\.\d\d\d/g, '');
+}
+
+function checkStatus() {
+    var statusElement = document.getElementById("status");
+    var statusValue = statusElement.value;
+    var statusDateElement1 = document.getElementById("statusDate1");
+    var statusDateElement2 = document.getElementById("statusDate2");
+
+    // Hide both date inputs initially
+    statusDateElement1.style.display = 'none';
+    statusDateElement2.style.display = 'none';
+
+    // Define which statuses need one or two date inputs
+    if (["Call Again - No VM, Emailed DD/MM/YY", 
+         "Call Again - VM DD/MM/YY, Emailed DD/MM/YY", 
+         "Call Again - Spoke DD/MM/YY, Emailed DD/MM/YY",
+         "Call Again - VM DD/MM/YY, No Email",
+         "Call Again - Spoke DD/MM/YY, No Email"].includes(statusValue)) {
+        statusDateElement1.style.display = 'block';
+    }
+    if (["Call Again - VM DD/MM/YY, Emailed DD/MM/YY", 
+         "Call Again - Spoke DD/MM/YY, Emailed DD/MM/YY",
+         "Call Again - VM DD/MM/YY, Emailed DD/MM/YY"].includes(statusValue)) {
+        statusDateElement1.style.display = 'block';
+        statusDateElement2.style.display = 'block';
+    }
+
+    // Store the status in local storage
+    localStorage.setItem('selectedStatus', statusValue);
+}
+
+function loadStatusAndDates() {
+    var storedStatus = localStorage.getItem('selectedStatus');
+    if (storedStatus) {
+        document.getElementById("status").value = storedStatus;
+        checkStatus(); // Ensure we show/hide date inputs correctly
+    }
+}
+
+function adjustSize(input) {
+    input.style.width = ((input.value.length + 1) * 8) + 'px';
+}
+
+function adjustSizePlusTwo(input) {
+    input.style.width = ((input.value.length + 3) * 8) + 'px'; // +3 accounts for two extra characters and a little extra space
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneNumberInput = document.getElementById('PhoneNumber');  // Ensure this ID matches the input
+
+    // Load existing number and format input
+    if (!phoneNumberInput.value.startsWith('+61')) {
+        // Assumes that +61 should not be prepended if not already present
+        phoneNumberInput.value = '+61' + phoneNumberInput.value;
+    }
+
+    // When the form is about to be submitted, split the phone number into code and number
+    document.forms[0].addEventListener('submit', function() {
+        const fullNumber = phoneNumberInput.value;
+        // Extract the country code assuming it starts with + followed by digits (adjust the regex based on your needs)
+        const matches = fullNumber.match(/^(\+\d+)(.*)$/);
+        if (matches) {
+            document.getElementById('PhoneSTD').value = matches[1]; // Country code
+            document.getElementById('PhoneNo').value = matches[2]; // Rest of the number
+        } else {
+            // If no match found, treat the whole number as the phone number without country code
+            document.getElementById('PhoneSTD').value = '';
+            document.getElementById('PhoneNo').value = phoneNumberInput.value;
+        }
+    });
+});
+</script>
+        
+                            <!-- Add more fields as necessary -->
+                        {% else %}
+                            <p>No data found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                
+                <div class="navigation">
+                    {% if prev_id %}
+                        <a href="{{ url_for('details', id=prev_id, table=table) }}" class="btn btn-primary">Previous</a>
+                    {% endif %}
+                    {% if next_id %}
+                        <a href="{{ url_for('details', id=next_id, table=table) }}" class="btn btn-primary" id="next">Next</a>
+                    {% endif %}
+                </div>
+                
+                
+                <a href="/" class="btn btn-primary mt-3" id="back_to_list">Back to List</a>
+            </div>
+            <!-- Chart End -->
+            <!-- Navigation Buttons -->
+
+            <button onclick="downloadPDF()" class="download">Download PDF</button>
+           
+            
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">DirectCounsel</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. **/-->
+                            Designed By <a href="https://htmlcodex.com">Veritas Analytica</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" id="back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static',filename='lib/chart/chart.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/easing/easing.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/tempusdominus/js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.min.js"></script>
+<script>
+    var fullNameInput = document.getElementById('keyDecisionMakerInput');
+    new Tagify(fullNameInput);
+
+    var positionInput = document.getElementById('keyDecisionMakerPositionInput');
+    new Tagify(positionInput);  // Only if you need tagging functionality for position
+
+    var emailInput = document.getElementById('EMAILInput');
+    
+    // Initialize Tagify on the input
+    var tagify = new Tagify(emailInput, {
+        originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(', ')
+    });
+
+    // Function to handle click events on Tagify's tags
+    tagify.on('click', function(e){
+        var emailAddress = e.detail.data.value; // Extracting the email from the clicked tag
+        if (emailAddress.includes('@')) { // Simple validation
+            window.location.href = 'mailto:' + emailAddress;
+        }
+ });
+ 
+ var phoneInput = document.getElementById('additionalPhoneNoInput');
+var phoneLink = document.getElementById('phoneLink');
+
+// Initialize Tagify on the phone number input
+var phoneTagify = new Tagify(phoneInput, {
+    originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(', ')
+});
+
+// Function to handle click events on Tagify's tags and update the phone link dynamically
+phoneTagify.on('click', function(e){
+    var phoneNumber = e.detail.data.value; // Extracting the phone number from the clicked tag
+    var formattedPhoneNumber = phoneNumber.replace(/[^0-9+]/g, ''); // Simplistic number formatting
+    if (formattedPhoneNumber) { // Check if there's a valid number
+        phoneLink.href = 'tel:' + formattedPhoneNumber;
+    } else {
+        phoneLink.href = '#'; // Non-functional link if input is invalid or empty
+    }
+});
+
+// Update link on input change to handle manual entries
+phoneInput.addEventListener('input', function() {
+    var formattedPhoneNumber = this.value.replace(/[^0-9+]/g, ''); // Simplistic number formatting
+    this.value = formattedPhoneNumber; // Update the input with formatted number
+    if (formattedPhoneNumber) {
+        phoneLink.href = 'tel:' + formattedPhoneNumber;
+    } else {
+        phoneLink.href = '#';
+    }
+});
+
+// Prevent default action if the link is clicked when href is "#"
+phoneLink.addEventListener('click', function(event) {
+    if (phoneLink.href.slice(-1) === "#") {
+        event.preventDefault();
+    }
+});
+
+  
+    var phoneNumberInput = document.getElementById('PhoneNumber');
+    new Tagify(phoneNumberInput, {
+    pattern: /^\+61\d+$/, // Ensure the format is as expected
+    delimiters: ",", // Use comma as the delimiter for multiple phones
+    keepInvalidTags: true // Optionally keep invalid entries for manual review
+});
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currencyFields = document.querySelectorAll('.currency');
+        currencyFields.forEach(field => {
+            const value = parseInt(field.textContent.trim());
+            if (!isNaN(value)) {
+                field.textContent = '$' + value.toLocaleString('en-US');
+            }
+        });
+    });
+    function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'pt', 'letter'); // Adjusted to 'a4' size for standard PDF format
+
+    // Hide the sidebar and other elements
+    const elementsToHide = [
+        '.sidebar', '.download', '#back_to_list', '#next', '#more_information',
+        '#update', '#notes', '#add_to_calendar', '#follow_Up', '#status',
+        '#status_container', '#notes_container', '#drop_down', '#back-to-top',
+        '#nav', '.navigation'
+    ];
+
+    elementsToHide.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) element.style.display = 'none';
+    });
+
+    // Select the main content element using class selector
+    const contentElement = document.querySelector('.content'); // Ensure this targets the main content
+
+    html2canvas(contentElement, {
+        useCORS: true,
+        scale: 2, // Consider lowering this if the content is too large
+        logging: true,
+        scrollY: -window.scrollY // Adjust window scroll to prevent offset issues
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+
+        // Get the dimensions of the PDF page
+        const pdfWidth = doc.internal.pageSize.getWidth();
+        const pdfHeight = doc.internal.pageSize.getHeight();
+
+        // Add the image to cover the whole page
+        doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        const pdfOutput = doc.output('blob');
+
+        // Create a link to download the PDF
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(pdfOutput);
+        link.download = 'download.pdf';
+        link.click();
+
+        // Show the sidebar and other elements again
+        elementsToHide.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) element.style.display = '';
+        });
+
+        // Prepare the mailto link
+        const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&su=&body=Please find the attached document for your review.&tf=1`;
+        window.open(mailtoLink, '_blank');
+    });
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

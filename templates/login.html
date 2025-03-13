@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif; /* Ensures a more modern font is used */
+        }
+        .container {
+            width: 350px; /* Increased from 300px to 350px */
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px; /* Adds rounded corners for a smoother look */
+        }
+        input[type="email"], input[type="password"] {
+            width: calc(100% - 22px); /* Full width minus padding */
+            padding: 10px; /* More padding for better touch interaction */
+            margin-bottom: 20px; /* More space between fields */
+            border: 1px solid #ccc; /* Subtle border styling */
+            border-radius: 4px; /* Rounded corners on inputs */
+            font-size: 16px; /* Larger font size for better readability */
+        }
+        .button-primary {
+            width: 100%;
+            color: #fff;
+            background-color: #009CFF;
+            border: none;
+            padding: 12px 20px; /* Larger button for easier clicking */
+            font-size: 18px; /* Larger font size for button */
+            border-radius: 4px; /* Rounded corners on the button */
+            cursor: pointer; /* Cursor pointer to indicate it's clickable */
+        }
+        label {
+            display: block; /* Ensures the label takes its own line */
+            margin-bottom: 5px;
+            color: #009CFF;
+            font-size: 14px; /* Larger font size for labels */
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        {% if error %}
+        <div style="color: red;">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            <div class="row">
+                <label for="email">Email:</label>
+                <input class="u-full-width" type="email" placeholder="Enter your email" id="email" name="email" required>
+            </div>
+            <div class="row">
+                <label for="password">Password:</label>
+                <input class="u-full-width" type="password" placeholder="Enter your password" id="password" name="password" required>
+            </div>
+            <input class="button-primary" type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>
